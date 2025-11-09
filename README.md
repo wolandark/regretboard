@@ -14,3 +14,6 @@ A simple, minimal regret board website built with Laravel where people can anony
 - PHP 8.2 or higher
 - Composer
 - SQLite PHP extension
+
+
+<img width="980" height="938" alt="image" src="https://github.com/user-attachments/assets/c4d24d1b-ab3c-4e0e-ac18-147414a37f13" />
