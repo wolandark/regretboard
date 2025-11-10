@@ -36,6 +36,7 @@
         "DB_DATABASE": "regretboard",
         "DB_USERNAME": "regretboard_user",
         "DB_PASSWORD": "regretboard_pass_2024",
-        "STORAGE_PATH": "/tmp/storage"
+        "STORAGE_PATH": "/tmp/storage",
+        "TELEGRAM_BOT_TOKEN": "8404162405:AAGH58yUX5jGy_7v9xk5N58-pTdtViozRsg"
     }
 }

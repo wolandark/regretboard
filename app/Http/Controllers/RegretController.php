@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Regret;
 use App\Models\Comment;
+use App\Services\TelegramService;
 use Illuminate\Http\Request;
 
 class RegretController extends Controller
@@ -23,25 +24,31 @@ class RegretController extends Controller
         return view('regrets.show', compact('regret'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, TelegramService $telegram)
     {
         $validated = $request->validate([
             'content' => 'required|string|max:5000',
         ]);
 
-        Regret::create($validated);
+        $regret = Regret::create($validated);
+
+        // Send Telegram notification
+        $telegram->notifyNewRegret($regret);
 
         return redirect()->route('regrets.index')
             ->with('success', 'پشیمانی شما ثبت شد.');
     }
 
-    public function comment(Request $request, Regret $regret)
+    public function comment(Request $request, Regret $regret, TelegramService $telegram)
     {
         $validated = $request->validate([
             'content' => 'required|string|max:2000',
         ]);
 
-        $regret->comments()->create($validated);
+        $comment = $regret->comments()->create($validated);
+
+        // Send Telegram notification
+        $telegram->notifyNewComment($comment, $regret);
 
         return redirect()->route('regrets.show', $regret)
             ->with('success', 'نظر شما ثبت شد.');
