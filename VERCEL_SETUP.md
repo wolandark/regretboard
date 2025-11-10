@@ -43,14 +43,33 @@ The `vercel.json` is configured to use SQLite at `/tmp/database.sqlite` for test
 3. **Check Vercel logs** - View function logs in Vercel dashboard
 4. **Enable debug temporarily** - Set `APP_DEBUG=true` to see errors (remove after fixing!)
 
+## Build Process
+
+The project uses a `build.sh` script that:
+1. Downloads Composer if not present
+2. Installs PHP dependencies using Composer
+
+This is necessary because Vercel's build environment doesn't have Composer pre-installed.
+
 ## Migration
 
 After setting up your cloud database, you'll need to run migrations. You can:
 
-1. Use Vercel's build command to run migrations:
-   ```json
-   "buildCommand": "php artisan migrate --force"
+1. Use Vercel's build command to run migrations (add to build.sh):
+   ```bash
+   php artisan migrate --force
    ```
 
 2. Or create a one-time migration endpoint (for security, protect it with a secret)
+
+## Alternative: Commit Vendor Directory
+
+If the build script doesn't work, you can commit the `vendor` directory to your repository:
+```bash
+# Remove vendor from .gitignore temporarily
+git add -f vendor/
+git commit -m "Add vendor directory for Vercel deployment"
+```
+
+This is not ideal but works reliably on Vercel.
 
