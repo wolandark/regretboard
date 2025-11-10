@@ -1,7 +1,6 @@
 {
     "version": 2,
     "framework": null,
-    "buildCommand": "chmod +x build.sh && ./build.sh",
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.7.1"
