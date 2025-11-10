@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Force HTTPS URLs on Vercel
+        if (getenv('VERCEL') || getenv('FORCE_HTTPS') === 'true' || config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
         // Auto-run migrations on Vercel if database is empty
         if (getenv('VERCEL') || getenv('DB_DATABASE') === '/tmp/database.sqlite') {
             try {
