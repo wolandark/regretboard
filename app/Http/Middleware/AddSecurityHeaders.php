@@ -17,7 +17,8 @@ class AddSecurityHeaders
     {
         // Validate Origin/Referer for POST requests to prevent CSRF
         // This is a secondary check - Laravel's CSRF token is the primary protection
-        if ($request->isMethod('POST') || $request->isMethod('PUT') || $request->isMethod('PATCH') || $request->isMethod('DELETE')) {
+        // Skip in local development
+        if (config('app.env') !== 'local' && ($request->isMethod('POST') || $request->isMethod('PUT') || $request->isMethod('PATCH') || $request->isMethod('DELETE'))) {
             $appUrl = rtrim(config('app.url'), '/');
             $origin = $request->header('Origin');
             $referer = $request->header('Referer');

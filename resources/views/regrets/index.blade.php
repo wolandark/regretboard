@@ -20,9 +20,19 @@
             <div class="regret-content">{{ $regret->content }}</div>
             <div class="regret-meta">
                 <span>{{ $regret->created_at->diffForHumans() }}</span>
-                <a href="{{ route('regrets.show', $regret) }}" class="link">
-                    <span class="comment-count">{{ $regret->comments->count() }} نظر</span>
-                </a>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <a href="{{ route('regrets.show', $regret) }}" class="link">
+                        <span class="comment-count">{{ $regret->comments->count() }} نظر</span>
+                    </a>
+                    @if(in_array($regret->token, session('owned_regrets', [])))
+                        <a href="{{ route('regrets.edit', $regret) }}" style="color: #667aba; text-decoration: none; font-size: 0.9rem;">✏️ ویرایش</a>
+                        <form action="{{ route('regrets.destroy', $regret) }}" method="POST" style="display: inline;" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این پشیمانی را حذف کنید؟');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" style="background: none; border: none; color: #dc3545; cursor: pointer; font-size: 0.9rem; padding: 0;">🗑️ حذف</button>
+                        </form>
+                    @endif
+                </div>
             </div>
         </div>
     @empty
