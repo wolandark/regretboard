@@ -210,6 +210,12 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div class="alert alert-error" style="background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;">
+                {{ session('error') }}
+            </div>
+        @endif
+
         @yield('content')
     </div>
 </body>

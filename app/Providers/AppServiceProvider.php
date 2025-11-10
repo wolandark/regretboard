@@ -28,18 +28,21 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        // Auto-run migrations on Vercel if database is empty
+        // Auto-run migrations on Vercel if needed
         if (getenv('VERCEL')) {
             try {
                 // Check if migrations table exists
                 if (!Schema::hasTable('migrations')) {
                     Artisan::call('migrate', ['--force' => true]);
+                } else {
+                    // Check if token columns exist (for the new migrations)
+                    if (Schema::hasTable('regrets') && !Schema::hasColumn('regrets', 'token')) {
+                        Artisan::call('migrate', ['--force' => true]);
+                    }
                 }
             } catch (\Exception $e) {
                 // Log error but don't crash - database might not be ready yet
-                if (config('app.debug')) {
-                    error_log('Migration error: ' . $e->getMessage());
-                }
+                error_log('Migration error: ' . $e->getMessage());
             }
         }
     }

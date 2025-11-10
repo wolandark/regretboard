@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('regrets', function (Blueprint $table) {
-            $table->string('token', 64)->nullable()->after('id');
+            // PostgreSQL doesn't support 'after', so we just add the column
+            $table->string('token', 64)->nullable();
         });
 
         // Generate tokens for existing records
