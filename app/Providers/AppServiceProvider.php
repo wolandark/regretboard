@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Auto-run migrations on Vercel if database is empty
-        if (getenv('VERCEL') || getenv('DB_DATABASE') === '/tmp/database.sqlite') {
+        if (getenv('VERCEL')) {
             try {
                 // Check if migrations table exists
                 if (!Schema::hasTable('migrations')) {

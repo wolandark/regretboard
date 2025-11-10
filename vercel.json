@@ -28,8 +28,12 @@
         "SESSION_DRIVER": "cookie",
         "SESSION_SECURE_COOKIE": "true",
         "FORCE_HTTPS": "true",
-        "DB_CONNECTION": "sqlite",
-        "DB_DATABASE": "/tmp/database.sqlite",
+        "DB_CONNECTION": "pgsql",
+        "DB_HOST": "172.86.74.100",
+        "DB_PORT": "5432",
+        "DB_DATABASE": "regretboard",
+        "DB_USERNAME": "regretboard_user",
+        "DB_PASSWORD": "regretboard_pass_2024",
         "STORAGE_PATH": "/tmp/storage"
     }
 }
